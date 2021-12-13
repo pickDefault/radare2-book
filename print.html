@@ -8164,7 +8164,36 @@ for the sake of readability!</p>
     }
 </code></pre>
 <ol start="6">
-<li>Then register those using <code>r2lang.plugin(&quot;asm&quot;)</code> and <code>r2lang.plugin(&quot;anal&quot;)</code> respectively</li>
+<li>(Optional) To add extra information about op sizes and alignment, add a <code>archinfo</code> subfunction and point to it in the structure</li>
+</ol>
+<pre><code class="language-python">def mycpu_anal(a):
+    def set_reg_profile():
+        [...]
+    def archinfo(query):
+        if query == R.R_ANAL_ARCHINFO_MIN_OP_SIZE:
+            return 1
+        if query == R.R_ANAL_ARCHINFO_MAX_OP_SIZE:
+            return 8
+        if query == R.R_ANAL_ARCHINFO_INV_OP_SIZE:  # invalid op size
+            return 2
+        return 0
+    def analop(memview, pc):
+        [...]
+
+    return {
+            &quot;name&quot; : &quot;mycpu&quot;,
+            &quot;arch&quot; : &quot;mycpu&quot;,
+            &quot;bits&quot; : 32,
+            &quot;license&quot; : &quot;GPL&quot;,
+            &quot;desc&quot; : &quot;MYCPU anal&quot;,
+            &quot;esil&quot; : 1,
+            &quot;set_reg_profile&quot; : set_reg_profile,
+            &quot;archinfo&quot;: archinfo,
+            &quot;op&quot; : op,
+    }
+</code></pre>
+<ol start="7">
+<li>Register both plugins using <code>r2lang.plugin(&quot;asm&quot;)</code> and <code>r2lang.plugin(&quot;anal&quot;)</code> respectively</li>
 </ol>
 <pre><code class="language-python">print(&quot;Registering MYCPU disasm plugin...&quot;)
 print(r2lang.plugin(&quot;asm&quot;, mycpu))
