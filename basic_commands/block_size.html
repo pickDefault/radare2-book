@@ -176,12 +176,12 @@ Usage: b[f] [arg]  # Get/Set block size
 <p>Another way around is to use special variables <code>$FB</code> and <code>$FS</code> which denote Function's Beginning and Size at the current seek. Read more about <a href="../refcard/intro.html#usable-variables-in-expression">Usable variables</a>.</p>
 <pre><code>[0x00000000]&gt; s sym.main + 0x04
 [0x00001ec9]&gt; pD @ $FB !$FS  # disassemble current function
-╭ 211: int main (int argc, char **argv, char **envp);
-│           0x00001ec5      55                 push rbp
-│           0x00001ec6      4889e5             mov rbp, rsp
-│           0x00001ec9      4881ecc0000000     sub rsp, 0xc0
+/ 211: int main (int argc, char **argv, char **envp);
+|           0x00001ec5      55                 push rbp
+|           0x00001ec6      4889e5             mov rbp, rsp
+|           0x00001ec9      4881ecc0000000     sub rsp, 0xc0
 ...
-╰           0x00001f97      c3                 ret
+\           0x00001f97      c3                 ret
 </code></pre>
 <p>Note: don't put space after <code>!</code> size designator. See also <a href="../first_steps/command_format.html">Command Format</a>.</p>
 

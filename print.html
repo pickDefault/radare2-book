@@ -944,18 +944,18 @@ It is quite simple to add new architectures for disassembling and analyzing code
 <p>Changes syntax flavor for disassembler between Intel and AT&amp;T. At the moment, this setting affects Udis86 disassembler for Intel 32/Intel 64 targets only. Supported values are <code>intel</code> and <code>att</code>.</p>
 <h3><a class="header" href="#asmpseudo" id="asmpseudo">asm.pseudo</a></h3>
 <p>A boolean value to set the psuedo syntax in the disassembly. &quot;False&quot; indicates a native one, defined by the current architecture, &quot;true&quot; activates a pseudocode strings format. For example, it'll transform :</p>
-<pre><code>│           0x080483ff      e832000000     call 0x8048436
-│           0x08048404      31c0           xor eax, eax
-│           0x08048406      0205849a0408   add al, byte [0x8049a84]
-│           0x0804840c      83f800         cmp eax, 0
-│           0x0804840f      7405           je 0x8048416
+<pre><code>|           0x080483ff      e832000000     call 0x8048436
+|           0x08048404      31c0           xor eax, eax
+|           0x08048406      0205849a0408   add al, byte [0x8049a84]
+|           0x0804840c      83f800         cmp eax, 0
+|           0x0804840f      7405           je 0x8048416
 </code></pre>
 <p>to</p>
-<pre><code>│           0x080483ff      e832000000     0x8048436 ()
-│           0x08048404      31c0           eax = 0
-│           0x08048406      0205849a0408   al += byte [0x8049a84]
-│           0x0804840c      83f800         var = eax - 0
-│           0x0804840f      7405           if (!var) goto 0x8048416
+<pre><code>|           0x080483ff      e832000000     0x8048436 ()
+|           0x08048404      31c0           eax = 0
+|           0x08048406      0205849a0408   al += byte [0x8049a84]
+|           0x0804840c      83f800         var = eax - 0
+|           0x0804840f      7405           if (!var) goto 0x8048416
 </code></pre>
 <p>It can be useful while disassembling obscure architectures.</p>
 <h3><a class="header" href="#asmos" id="asmos">asm.os</a></h3>
@@ -977,18 +977,18 @@ It is quite simple to add new architectures for disassembling and analyzing code
 <h3><a class="header" href="#asmsubreg" id="asmsubreg">asm.sub.reg</a></h3>
 <p>A boolean value used to replace register names with arguments or their associated role alias.</p>
 <p>For example, if you have something like this:</p>
-<pre><code>│           0x080483ea      83c404         add esp, 4
-│           0x080483ed      68989a0408     push 0x8049a98
-│           0x080483f7      e870060000     call sym.imp.scanf
-│           0x080483fc      83c408         add esp, 8
-│           0x08048404      31c0           xor eax, eax
+<pre><code>|           0x080483ea      83c404         add esp, 4
+|           0x080483ed      68989a0408     push 0x8049a98
+|           0x080483f7      e870060000     call sym.imp.scanf
+|           0x080483fc      83c408         add esp, 8
+|           0x08048404      31c0           xor eax, eax
 </code></pre>
 <p>This variable changes it to:</p>
-<pre><code>│           0x080483ea      83c404         add SP, 4
-│           0x080483ed      68989a0408     push 0x8049a98
-│           0x080483f7      e870060000     call sym.imp.scanf
-│           0x080483fc      83c408         add SP, 8
-│           0x08048404      31c0           xor A0, A0
+<pre><code>|           0x080483ea      83c404         add SP, 4
+|           0x080483ed      68989a0408     push 0x8049a98
+|           0x080483f7      e870060000     call sym.imp.scanf
+|           0x080483fc      83c408         add SP, 8
+|           0x08048404      31c0           xor A0, A0
 </code></pre>
 <h3><a class="header" href="#asmsubjmp" id="asmsubjmp">asm.sub.jmp</a></h3>
 <p>A boolean value used to substitute jump, call and branch targets in disassembly.</p>
@@ -1238,12 +1238,12 @@ Usage: b[f] [arg]  # Get/Set block size
 <p>Another way around is to use special variables <code>$FB</code> and <code>$FS</code> which denote Function's Beginning and Size at the current seek. Read more about <a href="basic_commands/../refcard/intro.html#usable-variables-in-expression">Usable variables</a>.</p>
 <pre><code>[0x00000000]&gt; s sym.main + 0x04
 [0x00001ec9]&gt; pD @ $FB !$FS  # disassemble current function
-╭ 211: int main (int argc, char **argv, char **envp);
-│           0x00001ec5      55                 push rbp
-│           0x00001ec6      4889e5             mov rbp, rsp
-│           0x00001ec9      4881ecc0000000     sub rsp, 0xc0
+/ 211: int main (int argc, char **argv, char **envp);
+|           0x00001ec5      55                 push rbp
+|           0x00001ec6      4889e5             mov rbp, rsp
+|           0x00001ec9      4881ecc0000000     sub rsp, 0xc0
 ...
-╰           0x00001f97      c3                 ret
+\           0x00001f97      c3                 ret
 </code></pre>
 <p>Note: don't put space after <code>!</code> size designator. See also <a href="basic_commands/../first_steps/command_format.html">Command Format</a>.</p>
 <h2><a class="header" href="#sections" id="sections">Sections</a></h2>
@@ -1754,36 +1754,36 @@ and <code>asm.esil</code> which outputs <a href="basic_commands/../disassembling
 <p>Every flag name should be unique for addressing reasons. But it is quite a common need
 to have the flags, for example inside the functions, with simple and ubiquitous names like <code>loop</code> or <code>return</code>. For this purpose you can use so called &quot;local&quot; flags, which are tied to the function where they reside. It is possible to add them using <code>f.</code> command:</p>
 <pre><code>[0x00003a04]&gt; pd 10
-│      0x00003a04      48c705c9cc21.  mov qword [0x002206d8], 0xffffffffffffffff ;
+|      0x00003a04      48c705c9cc21.  mov qword [0x002206d8], 0xffffffffffffffff ;
 [0x2206d8:8]=0
-│      0x00003a0f      c60522cc2100.  mov byte [0x00220638], 0     ; [0x220638:1]=0
-│      0x00003a16      83f802         cmp eax, 2
-│  .─&lt; 0x00003a19      0f84880d0000   je 0x47a7
-│  │   0x00003a1f      83f803         cmp eax, 3
-│ .──&lt; 0x00003a22      740e           je 0x3a32
-│ ││   0x00003a24      83e801         sub eax, 1
-│.───&lt; 0x00003a27      0f84ed080000   je 0x431a
-││││   0x00003a2d      e8fef8ffff     call sym.imp.abort           ; void abort(void)
-││││   ; CODE XREF from main (0x3a22)
-││╰──&gt; 0x00003a32      be07000000     mov esi, 7
+|      0x00003a0f      c60522cc2100.  mov byte [0x00220638], 0     ; [0x220638:1]=0
+|      0x00003a16      83f802         cmp eax, 2
+|  .-&lt; 0x00003a19      0f84880d0000   je 0x47a7
+|  |   0x00003a1f      83f803         cmp eax, 3
+| .--&lt; 0x00003a22      740e           je 0x3a32
+| ||   0x00003a24      83e801         sub eax, 1
+|.---&lt; 0x00003a27      0f84ed080000   je 0x431a
+||||   0x00003a2d      e8fef8ffff     call sym.imp.abort           ; void abort(void)
+||||   ; CODE XREF from main (0x3a22)
+||`--&gt; 0x00003a32      be07000000     mov esi, 7
 [0x00003a04]&gt; f. localflag @ 0x3a32
 [0x00003a04]&gt; f.
 0x00003a32 localflag   [main + 210]
 [0x00003a04]&gt; pd 10
-│      0x00003a04      48c705c9cc21.  mov qword [0x002206d8], 0xffffffffffffffff ;
+|      0x00003a04      48c705c9cc21.  mov qword [0x002206d8], 0xffffffffffffffff ;
 [0x2206d8:8]=0
-│      0x00003a0f      c60522cc2100.  mov byte [0x00220638], 0     ; [0x220638:1]=0
-│      0x00003a16      83f802         cmp eax, 2
-│  .─&lt; 0x00003a19      0f84880d0000   je 0x47a7
-│  │   0x00003a1f      83f803         cmp eax, 3
-│ .──&lt; 0x00003a22      740e           je 0x3a32                    ; main.localflag
-│ ││   0x00003a24      83e801         sub eax, 1
-│.───&lt; 0x00003a27      0f84ed080000   je 0x431a
-││││   0x00003a2d      e8fef8ffff     call sym.imp.abort           ; void abort(void)
-││││   ; CODE XREF from main (0x3a22)
-││`──&gt;  .localflag:
-││││   ; CODE XREF from main (0x3a22)
-││`──&gt; 0x00003a32      be07000000     mov esi, 7
+|      0x00003a0f      c60522cc2100.  mov byte [0x00220638], 0     ; [0x220638:1]=0
+|      0x00003a16      83f802         cmp eax, 2
+|  .-&lt; 0x00003a19      0f84880d0000   je 0x47a7
+|  |   0x00003a1f      83f803         cmp eax, 3
+| .--&lt; 0x00003a22      740e           je 0x3a32                    ; main.localflag
+| ||   0x00003a24      83e801         sub eax, 1
+|.---&lt; 0x00003a27      0f84ed080000   je 0x431a
+||||   0x00003a2d      e8fef8ffff     call sym.imp.abort           ; void abort(void)
+||||   ; CODE XREF from main (0x3a22)
+||`--&gt;  .localflag:
+||||   ; CODE XREF from main (0x3a22)
+||`--&gt; 0x00003a32      be07000000     mov esi, 7
 [0x00003a04]&gt;
 </code></pre>
 <h3><a class="header" href="#flag-zones" id="flag-zones">Flag Zones</a></h3>
@@ -2391,9 +2391,9 @@ To enter visual mode, use <code>V</code> command. To exit from it back to comman
 Like in Vim the movements can be repeated by preceding the navigation key with the number, for
 example <code>5j</code> will move down for 5 lines, or <code>2l</code> will move 2 characters right.</p>
 <p><img src="visual_mode/visualmode.png" alt="Visual Mode" /></p>
-<h2><a class="header" href="#print-modes-aka-panels" id="print-modes-aka-panels">print modes aka panels</a></h2>
-<p>The Visual mode uses &quot;print modes&quot; which are basically different panel that you can rotate. By default those are:</p>
-<p>↻ <strong>Hexdump panel</strong> -&gt; <strong>Disassembly panel</strong> → <strong>Debugger panel</strong> → <strong>Hexadecimal words dump panel</strong> → <strong>Hex-less hexdump panel</strong> → <strong>Op analysis color map panel</strong> → <strong>Annotated hexdump panel</strong> ↺.</p>
+<h2><a class="header" href="#print-modes-aka-panels" id="print-modes-aka-panels">Print Modes, a.k.a. Panels</a></h2>
+<p>The Visual mode uses &quot;print modes&quot; which are basically different panels that you can rotate. By default those are:</p>
+<p><strong>Hexdump panel</strong> -&gt; <strong>Disassembly panel</strong> -&gt; <strong>Debugger panel</strong> -&gt; <strong>Hexadecimal words dump panel</strong> -&gt; <strong>Hex-less hexdump panel</strong> -&gt; <strong>Op analysis color map panel</strong> -&gt; <strong>Annotated hexdump panel</strong> -&gt; <strong>Hexdump panel</strong> -&gt; <strong>[...]</strong></p>
 <p>Notice that the top of the panel contains the command which is used, for example for the disassembly panel:</p>
 <pre><code>[0x00404890 16% 120 /bin/ls]&gt; pd $r @ entry0
 </code></pre>
@@ -3076,10 +3076,10 @@ create a link for a particular text file. You can use it with <code>CC,</code> c
 the visual mode. This will open an <code>$EDITOR</code> to create a new file, or if filename does exist, just
 will create a link. It will be shown in the disassembly comments:</p>
 <pre><code>[0x00003af7 11% 290 /bin/ls]&gt; pd $r @ main+55 # 0x3af7
-│0x00003af7  call sym.imp.setlocale        ;[1] ; ,(locale-help.txt) ; char *setlocale(int category, const char *locale)
-│0x00003afc  lea rsi, str.usr_share_locale ; 0x179cc ; &quot;/usr/share/locale&quot;
-│0x00003b03  lea rdi, [0x000179b2]         ; &quot;coreutils&quot;
-│0x00003b0a  call sym.imp.bindtextdomain   ;[2] ; char *bindtextdomain(char *domainname, char *dirname)
+|0x00003af7  call sym.imp.setlocale        ;[1] ; ,(locale-help.txt) ; char *setlocale(int category, const char *locale)
+|0x00003afc  lea rsi, str.usr_share_locale ; 0x179cc ; &quot;/usr/share/locale&quot;
+|0x00003b03  lea rdi, [0x000179b2]         ; &quot;coreutils&quot;
+|0x00003b0a  call sym.imp.bindtextdomain   ;[2] ; char *bindtextdomain(char *domainname, char *dirname)
 </code></pre>
 <p>Note <code>,(locale-help.txt)</code> appeared in the comments, if we press <code>,</code> again in the visual mode, it
 will open the file. Using this mechanism we can create a long descriptions of some particular places
@@ -4588,38 +4588,38 @@ indirect jumps and conditional jumps.</p>
 variable, to check if the program uplifted correctly, and to grasp how ESIL works:</p>
 <pre><code>[0x00001660]&gt; pdf
 . (fcn) fcn.00001660 40
-│   fcn.00001660 ();
-│     ; CALL XREF from 0x00001713 (entry2.fini)
-│     0x00001660  lea rdi, obj.__progname      ; 0x207220
-│     0x00001667  push rbp
-│     0x00001668  lea rax, obj.__progname      ; 0x207220
-│     0x0000166f  cmp rax, rdi
-│     0x00001672  mov rbp, rsp
-│ .─&lt; 0x00001675  je 0x1690
-│ │   0x00001677  mov rax, qword [reloc._ITM_deregisterTMCloneTable] ; [0x206fd8:8]=0
-│ │   0x0000167e  test rax, rax
-│.──&lt; 0x00001681  je 0x1690
-│││   0x00001683  pop rbp
-│││   0x00001684  jmp rax
-│``─&gt; 0x00001690  pop rbp
+|   fcn.00001660 ();
+|     ; CALL XREF from 0x00001713 (entry2.fini)
+|     0x00001660  lea rdi, obj.__progname      ; 0x207220
+|     0x00001667  push rbp
+|     0x00001668  lea rax, obj.__progname      ; 0x207220
+|     0x0000166f  cmp rax, rdi
+|     0x00001672  mov rbp, rsp
+| .-&lt; 0x00001675  je 0x1690
+| |   0x00001677  mov rax, qword [reloc._ITM_deregisterTMCloneTable] ; [0x206fd8:8]=0
+| |   0x0000167e  test rax, rax
+|.--&lt; 0x00001681  je 0x1690
+|||   0x00001683  pop rbp
+|||   0x00001684  jmp rax
+|``-&gt; 0x00001690  pop rbp
 `     0x00001691  ret
 [0x00001660]&gt; e asm.esil=true
 [0x00001660]&gt; pdf
 . (fcn) fcn.00001660 40
-│   fcn.00001660 ();
-│     ; CALL XREF from 0x00001713 (entry2.fini)
-│     0x00001660  0x205bb9,rip,+,rdi,=
-│     0x00001667  rbp,8,rsp,-=,rsp,=[8]
-│     0x00001668  0x205bb1,rip,+,rax,=
-│     0x0000166f  rdi,rax,==,$z,zf,=,$b64,cf,=,$p,pf,=,$s,sf,=,$o,of,=
-│     0x00001672  rsp,rbp,=
-│ .─&lt; 0x00001675  zf,?{,5776,rip,=,}
-│ │   0x00001677  0x20595a,rip,+,[8],rax,=
-│ │   0x0000167e  0,rax,rax,&amp;,==,$z,zf,=,$p,pf,=,$s,sf,=,$0,cf,=,$0,of,=
-│.──&lt; 0x00001681  zf,?{,5776,rip,=,}
-│││   0x00001683  rsp,[8],rbp,=,8,rsp,+=
-│││   0x00001684  rax,rip,=
-│``─&gt; 0x00001690  rsp,[8],rbp,=,8,rsp,+=
+|   fcn.00001660 ();
+|     ; CALL XREF from 0x00001713 (entry2.fini)
+|     0x00001660  0x205bb9,rip,+,rdi,=
+|     0x00001667  rbp,8,rsp,-=,rsp,=[8]
+|     0x00001668  0x205bb1,rip,+,rax,=
+|     0x0000166f  rdi,rax,==,$z,zf,=,$b64,cf,=,$p,pf,=,$s,sf,=,$o,of,=
+|     0x00001672  rsp,rbp,=
+| .-&lt; 0x00001675  zf,?{,5776,rip,=,}
+| |   0x00001677  0x20595a,rip,+,[8],rax,=
+| |   0x0000167e  0,rax,rax,&amp;,==,$z,zf,=,$p,pf,=,$s,sf,=,$0,cf,=,$0,of,=
+|.--&lt; 0x00001681  zf,?{,5776,rip,=,}
+|||   0x00001683  rsp,[8],rbp,=,8,rsp,+=
+|||   0x00001684  rax,rip,=
+|``-&gt; 0x00001690  rsp,[8],rbp,=,8,rsp,+=
 `     0x00001691  rsp,[8],rip,=,8,rsp,+=
 </code></pre>
 <p>To manually setup the ESIL imprecise emulation you need to run this command sequence:</p>
@@ -4662,20 +4662,20 @@ register and memory values in disassembly comments:</p>
 <pre><code>[0x00001660]&gt; e asm.emu=true
 [0x00001660]&gt; pdf
 . (fcn) fcn.00001660 40
-│   fcn.00001660 ();
-│     ; CALL XREF from 0x00001713 (entry2.fini)
-│     0x00001660  lea rdi, obj.__progname ; 0x207220 ; rdi=0x207220 -&gt; 0x464c457f
-│     0x00001667  push rbp                ; rsp=0xfffffffffffffff8
-│     0x00001668  lea rax, obj.__progname ; 0x207220 ; rax=0x207220 -&gt; 0x464c457f
-│     0x0000166f  cmp rax, rdi            ; zf=0x1 -&gt; 0x2464c45 ; cf=0x0 ; pf=0x1 -&gt; 0x2464c45 ; sf=0x0 ; of=0x0
-│     0x00001672  mov rbp, rsp            ; rbp=0xfffffffffffffff8
-│ .─&lt; 0x00001675  je 0x1690               ; rip=0x1690 -&gt; 0x1f0fc35d ; likely
-│ │   0x00001677  mov rax, qword [reloc._ITM_deregisterTMCloneTable] ; [0x206fd8:8]=0 ; rax=0x0
-│ │   0x0000167e  test rax, rax           ; zf=0x1 -&gt; 0x2464c45 ; pf=0x1 -&gt; 0x2464c45 ; sf=0x0 ; cf=0x0 ; of=0x0
-│.──&lt; 0x00001681  je 0x1690               ; rip=0x1690 -&gt; 0x1f0fc35d ; likely
-│││   0x00001683  pop rbp                 ; rbp=0xffffffffffffffff -&gt; 0x4c457fff ; rsp=0x0
-│││   0x00001684  jmp rax                 ; rip=0x0 ..
-│``─&gt; 0x00001690  pop rbp                 ; rbp=0x10102464c457f ; rsp=0x8 -&gt; 0x464c457f
+|   fcn.00001660 ();
+|     ; CALL XREF from 0x00001713 (entry2.fini)
+|     0x00001660  lea rdi, obj.__progname ; 0x207220 ; rdi=0x207220 -&gt; 0x464c457f
+|     0x00001667  push rbp                ; rsp=0xfffffffffffffff8
+|     0x00001668  lea rax, obj.__progname ; 0x207220 ; rax=0x207220 -&gt; 0x464c457f
+|     0x0000166f  cmp rax, rdi            ; zf=0x1 -&gt; 0x2464c45 ; cf=0x0 ; pf=0x1 -&gt; 0x2464c45 ; sf=0x0 ; of=0x0
+|     0x00001672  mov rbp, rsp            ; rbp=0xfffffffffffffff8
+| .-&lt; 0x00001675  je 0x1690               ; rip=0x1690 -&gt; 0x1f0fc35d ; likely
+| |   0x00001677  mov rax, qword [reloc._ITM_deregisterTMCloneTable] ; [0x206fd8:8]=0 ; rax=0x0
+| |   0x0000167e  test rax, rax           ; zf=0x1 -&gt; 0x2464c45 ; pf=0x1 -&gt; 0x2464c45 ; sf=0x0 ; cf=0x0 ; of=0x0
+|.--&lt; 0x00001681  je 0x1690               ; rip=0x1690 -&gt; 0x1f0fc35d ; likely
+|||   0x00001683  pop rbp                 ; rbp=0xffffffffffffffff -&gt; 0x4c457fff ; rsp=0x0
+|||   0x00001684  jmp rax                 ; rip=0x0 ..
+|``-&gt; 0x00001690  pop rbp                 ; rbp=0x10102464c457f ; rsp=0x8 -&gt; 0x464c457f
 `     0x00001691  ret                     ; rip=0x0 ; rsp=0x10 -&gt; 0x3e0003
 </code></pre>
 <p>Note here <code>likely</code> comments, which indicates that ESIL emulation predicted for particular
@@ -5226,26 +5226,26 @@ mov r9, rdx
 </code></pre>
 <p>radare2 also offers various <code>foreach</code> constructs for looping. One of the most useful is for looping through all the instructions of a function:</p>
 <pre><code>[0x004047d0]&gt; pdf
-╒ (fcn) entry0 42
-│; UNKNOWN XREF from 0x00400018 (unk)
-│; DATA XREF from 0x004064bf (sub.strlen_460)
-│; DATA XREF from 0x00406511 (sub.strlen_460)
-│; DATA XREF from 0x0040b080 (unk)
-│; DATA XREF from 0x0040b0ef (unk)
-│0x004047d0  xor ebp, ebp
-│0x004047d2  mov r9, rdx
-│0x004047d5  pop rsi
-│0x004047d6  mov rdx, rsp
-│0x004047d9  and rsp, 0xfffffffffffffff0
-│0x004047dd  push rax
-│0x004047de  push rsp
-│0x004047df  mov r8, 0x4136c0
-│0x004047e6  mov rcx, 0x413660      ; &quot;AWA..AVI..AUI..ATL.%.. &quot;
+/ (fcn) entry0 42
+|; UNKNOWN XREF from 0x00400018 (unk)
+|; DATA XREF from 0x004064bf (sub.strlen_460)
+|; DATA XREF from 0x00406511 (sub.strlen_460)
+|; DATA XREF from 0x0040b080 (unk)
+|; DATA XREF from 0x0040b0ef (unk)
+|0x004047d0  xor ebp, ebp
+|0x004047d2  mov r9, rdx
+|0x004047d5  pop rsi
+|0x004047d6  mov rdx, rsp
+|0x004047d9  and rsp, 0xfffffffffffffff0
+|0x004047dd  push rax
+|0x004047de  push rsp
+|0x004047df  mov r8, 0x4136c0
+|0x004047e6  mov rcx, 0x413660      ; &quot;AWA..AVI..AUI..ATL.%.. &quot;
 0A..AVI..AUI.
-│0x004047ed  mov rdi, main          ; &quot;AWAVAUATUH..S..H....&quot; @
+|0x004047ed  mov rdi, main          ; &quot;AWAVAUATUH..S..H....&quot; @
 0
-│0x004047f4  call sym.imp.__libc_start_main
-╘0x004047f9  hlt
+|0x004047f4  call sym.imp.__libc_start_main
+\0x004047f9  hlt
 [0x004047d0]&gt; pi 1 @@i
 mov r9, rdx
 pop rsi
@@ -6077,28 +6077,28 @@ hit breakpoint at: 55ca23a4a518
 <p>You can also see a graph layout of the heap:</p>
 <pre><code>[0x7fae46236ca6]&gt; dmhg
 Heap Layout
-    .────────────────────────────────────.
-    │    Malloc chunk @ 0x55a7ecbce000   │
-    │ size: 0x251                        │
-    │  fd: 0x0, bk: 0x0                  │
-    `────────────────────────────────────'
-        │
-    .───'
-    │
-    │
-  .─────────────────────────────────────────────.
-  │    Malloc chunk @ 0x55a7ecbce250            │
-  │ size: 0x411                                 │
-  │  fd: 0x57202c6f6c6c6548, bk: 0xa21646c726f  │
-  `─────────────────────────────────────────────'
-      │
-  .───'
-  │
-  │
-.────────────────────────────────────────────────────.
-│  Top chunk @ 0x55a7ecbce660                        │
-│ [brk_start:0x55a7ecbce000, brk_end:0x55a7ecbef000] │
-`────────────────────────────────────────────────────'
+    .------------------------------------.
+    |    Malloc chunk @ 0x55a7ecbce000   |
+    | size: 0x251                        |
+    |  fd: 0x0, bk: 0x0                  |
+    `------------------------------------'
+        |
+    .---'
+    |
+    |
+  .---------------------------------------------.
+  |    Malloc chunk @ 0x55a7ecbce250            |
+  | size: 0x411                                 |
+  |  fd: 0x57202c6f6c6c6548, bk: 0xa21646c726f  |
+  `---------------------------------------------'
+      |
+  .---'
+  |
+  |
+.----------------------------------------------------.
+|  Top chunk @ 0x55a7ecbce660                        |
+| [brk_start:0x55a7ecbce000, brk_end:0x55a7ecbef000] |
+`----------------------------------------------------'
 </code></pre>
 <p>Another heap commands can be found under <code>dmh</code>, check <code>dmh?</code> for the full list.</p>
 <pre><code>[0x00000000]&gt; dmh?

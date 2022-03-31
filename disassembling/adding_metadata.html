@@ -228,10 +228,10 @@ create a link for a particular text file. You can use it with <code>CC,</code> c
 the visual mode. This will open an <code>$EDITOR</code> to create a new file, or if filename does exist, just
 will create a link. It will be shown in the disassembly comments:</p>
 <pre><code>[0x00003af7 11% 290 /bin/ls]&gt; pd $r @ main+55 # 0x3af7
-│0x00003af7  call sym.imp.setlocale        ;[1] ; ,(locale-help.txt) ; char *setlocale(int category, const char *locale)
-│0x00003afc  lea rsi, str.usr_share_locale ; 0x179cc ; &quot;/usr/share/locale&quot;
-│0x00003b03  lea rdi, [0x000179b2]         ; &quot;coreutils&quot;
-│0x00003b0a  call sym.imp.bindtextdomain   ;[2] ; char *bindtextdomain(char *domainname, char *dirname)
+|0x00003af7  call sym.imp.setlocale        ;[1] ; ,(locale-help.txt) ; char *setlocale(int category, const char *locale)
+|0x00003afc  lea rsi, str.usr_share_locale ; 0x179cc ; &quot;/usr/share/locale&quot;
+|0x00003b03  lea rdi, [0x000179b2]         ; &quot;coreutils&quot;
+|0x00003b0a  call sym.imp.bindtextdomain   ;[2] ; char *bindtextdomain(char *domainname, char *dirname)
 </code></pre>
 <p>Note <code>,(locale-help.txt)</code> appeared in the comments, if we press <code>,</code> again in the visual mode, it
 will open the file. Using this mechanism we can create a long descriptions of some particular places

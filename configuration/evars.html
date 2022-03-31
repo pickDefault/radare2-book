@@ -161,18 +161,18 @@ It is quite simple to add new architectures for disassembling and analyzing code
 <p>Changes syntax flavor for disassembler between Intel and AT&amp;T. At the moment, this setting affects Udis86 disassembler for Intel 32/Intel 64 targets only. Supported values are <code>intel</code> and <code>att</code>.</p>
 <h3><a class="header" href="#asmpseudo" id="asmpseudo">asm.pseudo</a></h3>
 <p>A boolean value to set the psuedo syntax in the disassembly. &quot;False&quot; indicates a native one, defined by the current architecture, &quot;true&quot; activates a pseudocode strings format. For example, it'll transform :</p>
-<pre><code>│           0x080483ff      e832000000     call 0x8048436
-│           0x08048404      31c0           xor eax, eax
-│           0x08048406      0205849a0408   add al, byte [0x8049a84]
-│           0x0804840c      83f800         cmp eax, 0
-│           0x0804840f      7405           je 0x8048416
+<pre><code>|           0x080483ff      e832000000     call 0x8048436
+|           0x08048404      31c0           xor eax, eax
+|           0x08048406      0205849a0408   add al, byte [0x8049a84]
+|           0x0804840c      83f800         cmp eax, 0
+|           0x0804840f      7405           je 0x8048416
 </code></pre>
 <p>to</p>
-<pre><code>│           0x080483ff      e832000000     0x8048436 ()
-│           0x08048404      31c0           eax = 0
-│           0x08048406      0205849a0408   al += byte [0x8049a84]
-│           0x0804840c      83f800         var = eax - 0
-│           0x0804840f      7405           if (!var) goto 0x8048416
+<pre><code>|           0x080483ff      e832000000     0x8048436 ()
+|           0x08048404      31c0           eax = 0
+|           0x08048406      0205849a0408   al += byte [0x8049a84]
+|           0x0804840c      83f800         var = eax - 0
+|           0x0804840f      7405           if (!var) goto 0x8048416
 </code></pre>
 <p>It can be useful while disassembling obscure architectures.</p>
 <h3><a class="header" href="#asmos" id="asmos">asm.os</a></h3>
@@ -194,18 +194,18 @@ It is quite simple to add new architectures for disassembling and analyzing code
 <h3><a class="header" href="#asmsubreg" id="asmsubreg">asm.sub.reg</a></h3>
 <p>A boolean value used to replace register names with arguments or their associated role alias.</p>
 <p>For example, if you have something like this:</p>
-<pre><code>│           0x080483ea      83c404         add esp, 4
-│           0x080483ed      68989a0408     push 0x8049a98
-│           0x080483f7      e870060000     call sym.imp.scanf
-│           0x080483fc      83c408         add esp, 8
-│           0x08048404      31c0           xor eax, eax
+<pre><code>|           0x080483ea      83c404         add esp, 4
+|           0x080483ed      68989a0408     push 0x8049a98
+|           0x080483f7      e870060000     call sym.imp.scanf
+|           0x080483fc      83c408         add esp, 8
+|           0x08048404      31c0           xor eax, eax
 </code></pre>
 <p>This variable changes it to:</p>
-<pre><code>│           0x080483ea      83c404         add SP, 4
-│           0x080483ed      68989a0408     push 0x8049a98
-│           0x080483f7      e870060000     call sym.imp.scanf
-│           0x080483fc      83c408         add SP, 8
-│           0x08048404      31c0           xor A0, A0
+<pre><code>|           0x080483ea      83c404         add SP, 4
+|           0x080483ed      68989a0408     push 0x8049a98
+|           0x080483f7      e870060000     call sym.imp.scanf
+|           0x080483fc      83c408         add SP, 8
+|           0x08048404      31c0           xor A0, A0
 </code></pre>
 <h3><a class="header" href="#asmsubjmp" id="asmsubjmp">asm.sub.jmp</a></h3>
 <p>A boolean value used to substitute jump, call and branch targets in disassembly.</p>
