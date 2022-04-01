@@ -174,7 +174,7 @@ updated by many contributors over the Internet.</p>
 <p>The need for scripting showed the fragility of the initial design: a monolithic tool made the API hard to use, and so a deep refactoring was needed. In 2009 radare2 (r2) was born as a fork of radare1. The refactor added flexibility and dynamic features. This enabled much better integration, paving the way to use r2 <a href="https://github.com/radareorg/radare2-bindings">from different programming languages</a>. Later on, the <a href="https://github.com/radareorg/radare2-r2pipe">r2pipe API</a> allowed access to radare2 via pipes from any language.</p>
 <p>What started as a one-man project, with some eventual contributions, gradually evolved into a big community-based project around 2014. The number of users was growing fast, and the author-and main developer-had to switch roles from coder to manager in order to integrate the work of the different developers that were joining the project.</p>
 <p>Instructing users to report their issues allows the project to define new directions to evolve in. Everything is managed in <a href="https://github.com/radareorg/radare2">radare2's GitHub</a> and discussed in the Telegram channel.</p>
-<p>The project remains active at the time of writing this book, and there are several side projects that provide, among other things, a graphical user interface (<a href="https://github.com/radareorg/cutter">Cutter</a>), a decompiler (<a href="https://github.com/wargio/r2dec-js">r2dec</a>, <a href="https://github.com/radareorg/radeco">radeco</a>), Frida integration (<a href="https://github.com/nowsecure/r2frida">r2frida</a>), Yara, Unicorn, Keystone, and many other projects indexed in the <a href="https://github.com/radareorg/radare2-pm">r2pm</a> (the radare2 package manager).</p>
+<p>The project remains active at the time of writing this book, and there are several side projects that provide, among other things, a graphical user interface (<a href="https://github.com/radareorg/iaito">Iaito</a>), a decompiler (<a href="https://github.com/wargio/r2dec-js">r2dec</a>, <a href="https://github.com/radareorg/radeco">radeco</a>), Frida integration (<a href="https://github.com/nowsecure/r2frida">r2frida</a>), Yara, Unicorn, Keystone, and many other projects indexed in the <a href="https://github.com/radareorg/radare2-pm">r2pm</a> (the radare2 package manager).</p>
 <p>Since 2016, the community gathers once a year in <a href="https://www.radare.org/con/">r2con</a>, a congress around radare2 that takes place in Barcelona.</p>
 <h2><a class="header" href="#the-framework" id="the-framework">The Framework</a></h2>
 <p>The Radare2 project is a set of small command-line utilities that can be used together or independently.</p>
@@ -554,17 +554,18 @@ Usage: r2 [-ACdfLMnNqStuvwzX] [-P patch] [-p prj] [-a arch] [-b bits] [-i file]
 </code></pre>
 <h1><a class="header" href="#user-interfaces" id="user-interfaces">User Interfaces</a></h1>
 <p>Radare2 has seen many different user interfaces being developed over the years.</p>
-<p>Maintaining a GUI is far from the scope of developing the core machinery of a reverse engineering toolkit: it is preferred to have a separate project and community, allowing both projects to collaborate and to improve together - rather than forcing cli developers to think in gui problems and having to jump back and forth between the graphic aspect and the low level logic of the implementations.</p>
+<p>Maintaining a GUI is far from the scope of developing the core machinery of a reverse engineering toolkit; It is preferred to have a separate project and community, allowing both projects to collaborate and improve alongside each other. This allows individual developers to focus entirely on implementing a CLI or GUI feature instead of trying to juggle both graphical implementation and the low-level logic of the core CLI.</p>
 <p>In the past, there have been at least 5 different native user interfaces (ragui, r2gui, gradare, r2net, bokken) but none of them got enough maintenance power to take off and they all died.</p>
-<p>In addition, r2 has an embedded webserver and ships some basic user interfaces written in html/js. You can start them like this:</p>
+<h2><a class="header" href="#iaito" id="iaito">Iaito</a></h2>
+<p>The current main radare2 GUI is Iaito. It is written in C++ using Qt and was originally authored by Hugo Teso.</p>
+<ul>
+<li>Download: <a href="https://github.com/radareorg/iaito">https://github.com/radareorg/iaito</a></li>
+</ul>
+<p><img src="first_steps/Iaito.png" alt="Iaito screenshot" /></p>
+<h2><a class="header" href="#the-built-in-webserver" id="the-built-in-webserver">The Built-in Webserver</a></h2>
+<p>In addition, r2 includes an embedded webserver with a basic HTML/JS interface. Add <code>-c=H</code> to your command-line flags to automatically start the webserver and open it in your browser.</p>
 <pre><code>$ r2 -c=H /bin/ls
 </code></pre>
-<p>After 3 years of private development, Hugo Teso; the author of Bokken (python-gtk gui of r2) released to the public another frontend of r2, this time written in c++ and qt, which has been very welcomed by the community.</p>
-<p>This GUI was named Iaito, but as long as he prefered not to keep maintaining it, Xarkes decided to fork it under the name of Cutter (name voted by the community), and lead the project. This is how it looks:</p>
-<ul>
-<li><a href="https://github.com/radareorg/cutter">https://github.com/radareorg/cutter</a>.</li>
-</ul>
-<p><img src="first_steps/Cutter.png" alt="Cutter" /></p>
 <h2><a class="header" href="#basic-radare2-usage" id="basic-radare2-usage">Basic Radare2 Usage</a></h2>
 <p>The learning curve is usually somewhat steep at the beginning. Although after an hour of using it you should easily understand how most things work, and how to combine the various tools radare offers. You are encouraged to read the rest of this book to understand how some non-trivial things work, and to ultimately improve your skills.</p>
 <p><img src="first_steps/learning_curve.png" alt="learning_curve" /></p>
