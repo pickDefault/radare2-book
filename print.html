@@ -2693,8 +2693,8 @@ You can also press <code>&quot;</code> to quickly browse through the different o
 </code></pre>
 <p>More about that can be found under <code>v?</code>.</p>
 <h1><a class="header" href="#searching-for-bytes" id="searching-for-bytes">Searching for Bytes</a></h1>
-<p>The radare2 search engine is based on work done by esteve, plus multiple features implemented on top of it. It supports multiple keyword searches, binary masks, and hexadecimal values. It automatically creates flags for search hit locations ease future referencing.</p>
-<p>Search is initiated by <code>/</code> command.</p>
+<p>The radare2 search engine is based on work done by esteve, plus multiple features implemented on top of it. It supports multiple keyword searches, binary masks, and hexadecimal values. It automatically creates flags for search hit locations to ease future referencing.</p>
+<p>Searching is accessed with <code>/</code> command.</p>
 <pre><code>[0x00000000]&gt; /?
 |Usage: /[!bf] [arg]Search stuff (see 'e??search' for options)
 |Use io.va for searching in non virtual addressing spaces
@@ -2739,7 +2739,63 @@ anal.depth)
 | /z min max              search for strings of given size
 </code></pre>
 <p>Because everything is treated as a file in radare2, it does not matter whether you search in a socket, a remote device, in process memory, or a file.</p>
-<p>note that '/<em>' starts multiline comment. It's not for searching. type '</em>/' to end comment.</p>
+<p>Note that '/*' is not a command - it starts a multiline comment. Type '*/' to end the comment after it's opened.</p>
+<h2><a class="header" href="#search-options" id="search-options">Search Options</a></h2>
+<p>Options are controlled by the <code>search.</code> variables.</p>
+<pre><code>[0x00000000]&gt; e??search
+        search.align: only catch aligned search hits
+        search.chunk: chunk size for /+ (default size is asm.bits/8
+   search.contiguous: accept contiguous/adjacent search hits
+     search.distance: search string distance
+    search.esilcombo: stop search after N consecutive hits
+        search.flags: all search results are flagged, otherwise only printed
+         search.from: search start address
+           search.in: specify search boundaries
+        search.kwidx: store last search index count
+      search.maxhits: maximum number of hits (0: no limit)
+      search.overlap: look for overlapped search hits
+       search.prefix: prefix name in search hits label
+         search.show: show search results
+           search.to: search end address
+      search.verbose: make the output of search commands verbose
+</code></pre>
+<p>Perhaps the most important search variable is <code>search.in</code> - it controls where
+your search is occuring. If you aren't finding hits you expect, check this
+variable first. Note the difference between <code>map</code> and <code>maps</code> - <code>map</code> will only
+search the map that you are currently in, while <code>maps</code> will search all memory
+maps, with options to narrow the search by permissions.</p>
+<pre><code>[0x00000000]&gt; e search.in=?
+raw
+block
+bin.section
+bin.sections
+bin.sections.rwx
+bin.sections.r
+bin.sections.rw
+bin.sections.rx
+bin.sections.wx
+bin.sections.x
+io.map
+io.maps
+io.maps.rwx
+io.maps.r
+io.maps.rw
+io.maps.rx
+io.maps.wx
+io.maps.x
+dbg.stack
+dbg.heap
+dbg.map
+dbg.maps
+dbg.maps.rwx
+dbg.maps.r
+dbg.maps.rw
+dbg.maps.rx
+dbg.maps.wx
+dbg.maps.x
+anal.fcn
+anal.bb
+</code></pre>
 <h2><a class="header" href="#basic-search" id="basic-search">Basic Search</a></h2>
 <p>A basic search for a plain text string in a file would be something like:</p>
 <pre><code>$ r2 -q -c &quot;/ lib&quot; /bin/ls
