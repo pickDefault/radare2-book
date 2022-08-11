@@ -8902,7 +8902,7 @@ we can:</p>
 [0x0804856c]&gt; ps
 %d
 </code></pre>
-<p>it's exactly the format string of <code>scanf()</code>. But r2dec does not recognize the second argument (eax) which is a pointer. it points to var_4h and means out input will store in var_4h.</p>
+<p>it's exactly the format string of <code>scanf()</code>. But r2dec does not recognize the second argument (eax) which is a pointer. it points to var_4h and means our input will store in var_4h.</p>
 <p>we can easily write out pseudo code here.</p>
 <pre><code class="language-C">var_ch = (var_8h + var_ch)^2;
 if (var_ch == our_input)
