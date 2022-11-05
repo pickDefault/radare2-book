@@ -6593,7 +6593,7 @@ Child-SP          RetAddr           Call Site
 <li>the r2 shell</li>
 </ul>
 <h2><a class="header" href="#rax2-1" id="rax2-1">Rax2</a></h2>
-<p>The <code>rax2</code> utility comes with the radare framework and aims to be a minimalistic expression evaluator for the shell. It is useful for making base conversions between floating point values, hexadecimal representations, hexpair strings to ascii, octal to integer. It supports endianness and can be used as a shell if no arguments are given.</p>
+<p>The <code>rax2</code> utility comes with the radare framework and aims to be a minimalistic expression evaluator for the shell. It is useful for making base conversions between floating point values, hexadecimal representations, hexpair strings to ascii, octal to integer. It supports endianness conversion.</p>
 <p>This is the help message of rax2, this tool can be used in the command-line or interactively (reading the values from stdin), so it can be used as a multi-base calculator.</p>
 <p>Inside r2, the functionality of rax2 is available under the ? command. For example:</p>
 <pre><code>[0x00000000]&gt; ? 3+4
@@ -6656,31 +6656,37 @@ Usage: rax2 [options] [expr ...]
   -v      version              ;  rax2 -v
 </code></pre>
 <p>Some examples:</p>
-<pre><code>$ rax2 3+0x80
+<p>Calculator:</p>
+<pre><code class="language-sh">$ rax2 3+0x80
 0x83
+$ rax2 -d &quot;1&lt;&lt;8&quot;
+256
 </code></pre>
-<pre><code>$ rax2 0x80+3
-131
+<p>Base conversion:</p>
+<pre><code class="language-sh">$ rax2 '=2' 73303325
+100010111101000010100011101b
 </code></pre>
-<pre><code>$ echo 0x80+3 | rax2
-131
-</code></pre>
-<pre><code>$ rax2 -s 4142
+<p>The single quote for <code>'=2'</code> is not mandatory for bash but is necessary for some shell like zsh.</p>
+<p>Conversion in hex string</p>
+<pre><code class="language-sh">$ rax2 -s 4142
 AB
-</code></pre>
-<pre><code>$ rax2 -S AB
+$ rax2 -S AB
 4142
-</code></pre>
-<pre><code>$ rax2 -S &lt; bin.foo
+$ rax2 -S &lt; bin.foo
 ...
 </code></pre>
-<pre><code>$ rax2 -e 33
+<p>Endianess conversion:</p>
+<pre><code class="language-sh">$ rax2 -e 33
 0x21000000
-</code></pre>
-<pre><code>$ rax2 -e 0x21000000
+$ rax2 -e 0x21000000
 33
 </code></pre>
-<pre><code>$ rax2 -K 90203010
+<p>Base64 deconding</p>
+<pre><code class="language-sh">$ rax2 -D ZQBlAA== | rax2 -S
+65006500
+</code></pre>
+<p>Randomart:</p>
+<pre><code class="language-sh">$ rax2 -K 90203010
 +--[0x10302090]---+
 |Eo. .            |
 | . . . .         |
