@@ -3257,7 +3257,7 @@ ADDR BREAK
 <tr><td>---</td><td>---</td><td>---</td><td>---</td><td>----------------------------------------------</td></tr>
 <tr><td>=[]<br>=[*]<br>=[1]<br>=[2]<br>=[4]<br>=[8]</td><td>src,dst</td><td>poke</td><td>*dst=src</td><td><br>&gt; &quot;ae 0xdeadbeef,0x10000,=[4],&quot;<br><br>&gt; pxw 4@0x10000<br>0x00010000  0xdeadbeef                                ....<br><br>&gt; &quot;ae 0x0,0x10000,=[4],&quot;<br><br>&gt; pxw 4@0x10000<br>0x00010000  0x00000000</td></tr>
 <tr><td>[]<br>[*]<br>[1]<br>[2]<br>[4]<br>[8]</td><td>src</td><td>peek</td><td>stack=*src</td><td><br>&gt; w test@0x10000<br><br>&gt; &quot;ae 0x10000,[4],&quot;<br>0x74736574<br><br>&gt; ar r_00=0x10000<br><br>&gt; &quot;ae r_00,[4],&quot;<br>0x74736574</td></tr>
-<tr><td>|=[]<br>|=[1]<br>|=[2]<br>|=[4]<br>|=[8]</td><td>reg</td><td>nombre</td><td>code</td><td>&gt; <br>&gt;</td></tr>
+<tr><td>|=[]<br>|=[1]<br>|=[2]<br>|=[4]<br>|=[8]</td><td>reg</td><td>name</td><td>code</td><td>&gt; <br>&gt;</td></tr>
 <tr><td>SWAP</td><td></td><td>Swap</td><td>Swap two top elements</td><td>SWAP</td></tr>
 <tr><td>DUP</td><td></td><td>Duplicate</td><td>Duplicate top element in stack</td><td>DUP</td></tr>
 <tr><td>NUM</td><td></td><td>Numeric</td><td>If top element is a reference <br> (register name, label, etc),<br> dereference it and push its real value</td><td>NUM</td></tr>
