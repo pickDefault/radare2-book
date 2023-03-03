@@ -150,7 +150,7 @@
                         <h2><a class="header" href="#configuration-variables" id="configuration-variables">Configuration Variables</a></h2>
 <p>Below is a list of the most frequently used configuration variables. You can get a complete list by issuing <code>e</code> command without arguments. For example, to see all variables defined in the &quot;cfg&quot; namespace, issue <code>e cfg.</code> (mind the ending dot). You can get help on any eval configuration variable by using <code>e? cfg.</code></p>
 <p>The <code>e??</code> command to get help on all the evaluable configuration variables of radare2. As long as the output of this command is pretty large you can combine it with the internal grep <code>~</code> to filter for what you are looking for:</p>
-<p><img src="../img/configuration/e--color.png" alt="e??~color" /></p>
+<p><img src="../pics/e--color.png" alt="e??~color" /></p>
 <p>The Visual mode has an eval browser that is accessible through the <code>Vbe</code> command.</p>
 <h3><a class="header" href="#asmarch" id="asmarch">asm.arch</a></h3>
 <p>Defines the target CPU architecture used for disassembling (<code>pd</code>, <code>pD</code> commands) and code analysis (<code>a</code> command). You can find the list of possible values by looking at the result of <code>e asm.arch=?</code> or <code>rasm2 -L</code>.
