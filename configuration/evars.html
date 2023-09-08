@@ -160,7 +160,7 @@ It is quite simple to add new architectures for disassembling and analyzing code
 <h3><a class="header" href="#asmsyntax" id="asmsyntax">asm.syntax</a></h3>
 <p>Changes syntax flavor for disassembler between Intel and AT&amp;T. At the moment, this setting affects Udis86 disassembler for Intel 32/Intel 64 targets only. Supported values are <code>intel</code> and <code>att</code>.</p>
 <h3><a class="header" href="#asmpseudo" id="asmpseudo">asm.pseudo</a></h3>
-<p>A boolean value to set the psuedo syntax in the disassembly. &quot;False&quot; indicates a native one, defined by the current architecture, &quot;true&quot; activates a pseudocode strings format. For example, it'll transform :</p>
+<p>A boolean value to set the pseudo syntax in the disassembly. &quot;False&quot; indicates a native one, defined by the current architecture, &quot;true&quot; activates a pseudocode strings format. For example, it'll transform :</p>
 <pre><code>|           0x080483ff      e832000000     call 0x8048436
 |           0x08048404      31c0           xor eax, eax
 |           0x08048406      0205849a0408   add al, byte [0x8049a84]
