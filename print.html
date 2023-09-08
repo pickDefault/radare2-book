@@ -3638,7 +3638,7 @@ Before changing the basic blocks of the function it is recommended to check the 
 0x00003ba8 0x00003bf9 00:0000 81
 </code></pre>
 <h3><a class="header" href="#hand-craft-function" id="hand-craft-function">Hand craft function</a></h3>
-<p>before start, let's prepare a binary file first, for example:</p>
+<p>Before we start, let's prepare a binary file first. Write in <code>example.c</code>:</p>
 <pre><code class="language-C">int code_block()
 {
   int result = 0;
@@ -3649,8 +3649,8 @@ Before changing the basic blocks of the function it is recommended to check the 
   return result;
 }
 </code></pre>
-<p>then compile it with <code>gcc -c example.c -m32 -O0 -fno-pie</code>, we will get the object file <code>example.o</code>. open it with radare2. </p>
-<p>since we haven't analyzed it yet, the <code>pdf</code> command will not print out the disassembly here:</p>
+<p>then compile with <code>gcc -c example.c -m32 -O0 -fno-pie</code>, and open the object file <code>example.o</code> with radare2. </p>
+<p>Since we haven't analyzed it yet, the <code>pdf</code> command will not print out the disassembly here:</p>
 <pre><code>$ r2 example.o 
 [0x08000034]&gt; pdf
 p: Cannot find function at 0x08000034
@@ -3674,7 +3674,7 @@ p: Cannot find function at 0x08000034
             0x0800005c      c3             ret
 
 </code></pre>
-<p>our goal is to hand craft a function with the following structure</p>
+<p>our goal is to handcraft a function with the following structure</p>
 <p><img src="analysis/analyze_one.png" alt="analyze_one" /></p>
 <p>create a function at 0x8000034 named code_block:</p>
 <pre><code>[0x8000034]&gt; af+ 0x8000034 code_block
