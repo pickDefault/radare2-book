@@ -1079,7 +1079,7 @@ but appending <code>.r2</code> to it.</p>
 <pre><code>$ r2 -d /bin/ls
 &gt; =!help      ; handled by the IO plugin
 </code></pre>
-<p>If a command starts with <code>!</code>, posix_system() is called to pass the command to your shell. Check <code>!?</code> for more options and usage examples.</p>
+<p>If a command starts with <code>!</code>, the POSIX <code>system()</code> C function is called to pass the command to your shell. Check <code>!?</code> for more options and usage examples.</p>
 <pre><code>&gt; !ls         ; run `ls` in the shell
 </code></pre>
 <p>The meaning of the arguments (iter, addr, size) depends on the specific command. As a rule of thumb, most commands take a number as an argument to specify the number of bytes to work with, instead of the currently defined block size. Some commands accept math expressions or strings.</p>
